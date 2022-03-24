@@ -1,0 +1,25 @@
+<html>
+    <head>
+    </head>
+    <body>
+    <script>
+        let primaryRedirection = "<%= primaryRedirection %>" || "";
+        let secndaryRedirection = "<%= secndaryRedirection %>" || "";
+        let fallbackRedirection = "<%= fallbackRedirection %>"
+    
+      if (primaryRedirection) window.location = primaryRedirection; // will result in error message if app not installed
+      setTimeout(function() {
+         // Link to the App Store should go here -- only fires if deep link fails
+         if (secndaryRedirection) {
+             window.location = secndaryRedirection || fallbackRedirection;
+         } else {
+             console.log("fallbackRedirection")
+            window.location = fallbackRedirection;
+         }
+      }, 100);
+    
+    </script>
+    </body>
+    </html>
+
+
