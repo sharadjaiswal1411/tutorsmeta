@@ -146,7 +146,6 @@ testimonial
 	createdAt
 	updatedAT
 
-
 gallary
 
 	name

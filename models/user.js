@@ -28,18 +28,21 @@ const emailValidator = [
 
 const UserSchema = new mongoose.Schema({
 
-    firstname: {
+    //first
+    name: {
         type: String,
-         required:[true, 'Name is required.'],
+        required:[true, 'Name is required.'],
         trim: true,
-        validate: nameValidator
+        validate: nameValidator,
+        default:null
     },
-    lasttname: {
-        type: String,
-         required:[true, 'Name is required.'],
-        trim: true,
-        validate: nameValidator
-    },
+    // lastname: {
+    //     type: String,
+    //   //   required:[true, 'Name is required.'],
+    //     trim: true,
+    //     validate: nameValidator,
+    //     default:null
+    // },
     email: {
         type: String,
          required: [true, 'Email is required.'],
@@ -82,10 +85,15 @@ const UserSchema = new mongoose.Schema({
     },
 
     status:{            
-        type: Boolean,    // 0- inactive, 1- active, 2- deleted
-        default:false,
-        required:[true, 'status is required.'],
-    },
+    //     type: Boolean,    // 0- inactive, 1- active, 2- deleted
+    //     default:false,
+    //     required:[true, 'status is required.'],
+    //
+    type: String,
+    enum : ['ACTIVE','INACTIVE'],
+    default: 'INACTIVE'
+
+},
     deviceType: {
         type: String, // WEB/ ANDROID/ IOS
         required: [true, 'deviceType is required.'],

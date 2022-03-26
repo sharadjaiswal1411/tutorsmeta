@@ -118,7 +118,8 @@ const listAll = async (req, res) => {
     
 }
 const search = async (req, res) => {
-   
+    
+
    let search_text= (req.query.q)?req.query.q:"";
    let field_name= (req.query.order_by)?req.query.order_by:"";
     let order= (req.query.order)?req.query.order:"";
@@ -128,23 +129,17 @@ const search = async (req, res) => {
     }else{
             order_by['name']=1;
     }
-  
-   let conditions={status:true};
-
+   let conditions={status:true}
    if(search_text.length>0){
 
        conditions={ name: { $regex: '.*' + search_text + '.*' ,'$options' : 'i' }};
 
    }
-
-
-   
-
    Role.find(conditions,{_id:1,name:1,sort:order_by},  function(err, results) {
-       // let data={
-       //     'results':results,
+    //    let data={
+    //        'results':results,
            
-       // }
+    //    }
        return res.status(200).json(results);
       
    });

@@ -93,25 +93,26 @@ const login = async (req, res) => {
 
 
    const forgotPassword = async (req, res) => {
-   let data = await User.findOne({number:req.body.mobileNumber});
-   const response={};
-   if(data){
-    let otpCode=Math .floor((Math.random()*10000)+1);
-    let otpData=new otp({
-        mobileNumber:req.body.mobileNumber,
-        code:optCode,
+    res.send('forget password function is commented');
+//    let data = await User.findOne({number:req.body.mobileNumber});
+//    const response={};
+//    if(data){
+//     let otpCode=Math .floor((Math.random()*10000)+1);
+//     let otpData=new otp({
+//         mobileNumber:req.body.mobileNumber,
+//         code:optCode,
        
-    })
+//     })
     
-    let otpResponse=await otpData.save();
-    responseType.statusText='success'
-    responseType.message ='please check your mobileNumber'
-   }
-   else{
-     responseType.statusText='error'
-    responseType.message ='Not found this mobileNumber'
-   }
-          
+//     let otpResponse=await otpData.save();
+//     responseType.statusText='success'
+//     responseType.message ='please check your mobileNumber'
+//    }
+//    else{
+//      responseType.statusText='error'
+//     responseType.message ='Not found this mobileNumber'
+//    }
+
 
 
   
@@ -120,9 +121,19 @@ const login = async (req, res) => {
 
 
 
+const testFunction = async (req, res) => {
+    res.send('hello world!');
+    console.log("test function");
+    return sendSuccess({}, {}, 200, "Logged in successfully.");
+ }
+
+
+
+
 
 module.exports = {
     register,
     login,
     forgotPassword,
+    testFunction
 };

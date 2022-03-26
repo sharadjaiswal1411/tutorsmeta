@@ -16,6 +16,8 @@ const nameValidator = [
 const RoleSchema = new mongoose.Schema({
     name: {
         type: String,
+    //     type:String,
+    // enum : ['TEACHER','STUDENT','ADMIN'],
         required: true,
         trim: true,
         unique: [true, 'Role has already registered.'],

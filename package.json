@@ -1,0 +1,45 @@
+{
+  "name": "PHED",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js -st"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sharadjaiswal1411/tutorsmeta"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@hapi/joi": "^17.1.1",
+    "aws-sdk": "^2.800.0",
+    "bcryptjs": "^2.4.3",
+    "bluebird": "^3.7.2",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "crypto-js": "^4.1.1",
+    "dotenv": "^8.2.0",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "http-status": "^1.4.2",
+    "joi": "^14.3.1",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.15",
+    "moment": "^2.29.1",
+    "mongoose": "^5.9.7",
+    "mongoose-aggregate-paginate-v2": "^1.0.42",
+    "mongoose-validator": "^2.1.0",
+    "multer": "^1.4.2",
+    "node-cron": "^3.0.0",
+    "nodemailer": "^6.4.8",
+    "nodemon": "^2.0.6",
+    "slugify": "^1.6.1",
+    "twilio": "^3.50.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0"
+  }
+}
