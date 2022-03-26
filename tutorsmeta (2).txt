@@ -1,0 +1,202 @@
+models\
+
+user.js
+
+id
+email
+name
+password
+user_type [teacher/organisation/student]
+created_at
+updated_at
+
+teachers
+	id
+	userId
+	firstName
+	lastName
+	slug
+	tagline
+	email
+	mobileNo
+	profilePic
+	gender
+	emailVisible
+	mobileVisible
+	profileVisible
+	emailVerified
+	mobileVerified
+	pincode
+	landmark
+	hourlyRate
+	shortBio
+	about
+	lat
+	lng
+	fullAddress
+	teachingSince
+	city ref
+	state ref
+	country ref
+	boards [] ref
+	grades [] ref
+	subjects []
+	galleryImages[] ref
+	educations [] ref
+	experiences [] ref
+	certifications[] ref
+	idProofs [] ref
+	availablity []
+	areaServe[] ref location
+	testimonials[] ref testimonal
+	teachingMode [Online/offline]
+	teachingMedium [] ref languages
+	readyToTravel [true,false]
+	travelDistance 
+	featured
+	status
+	createdAt
+	updatedAt
+
+
+board
+	
+	name
+	image
+	slug
+	description
+	status
+	createdAt
+	updatedAt
+
+
+
+grade
+        board
+	name
+	image
+	slug
+	description
+	fees
+	status
+	createdAt
+	updatedAt
+
+
+subjects
+
+	gradeId
+	name
+	slug
+	image
+	status
+	description
+	createdAt
+	updatedAt
+
+
+education
+
+	teacherId
+	subjectId
+	university
+	degreeType
+	startYear
+	endYear
+	createdAt
+	updatedAt
+
+certification
+
+	teacherId
+	name
+	duration
+	organisation
+	createdAt
+	updatedAt
+
+
+experience
+
+	teacherId
+	designationId
+	organisationId
+	startMonth
+	startYear
+	endMonth
+	endYear
+	location
+
+location
+
+	name
+	cityId
+	slug
+	lat
+	lng
+	
+
+testimonial
+
+	teacherId
+	studentId
+	rating
+	review
+	status
+	createdAt
+	updatedAT
+
+gallary
+
+	name
+	slug
+	teacherId
+	image
+
+student
+
+	firstName
+	lastName
+	userId
+	profilePic
+	mobileNo 
+	schoolId
+	gendor
+	board
+	grade
+	subjects []
+	about
+	lat
+	lng
+	fullAddress
+	city ref
+	state ref
+	country ref
+	status
+	createdAt
+	updatedAt
+
+Organisation
+
+	name
+	slug
+	userId
+	profilePic
+	type [Company/Institute/School]
+	legalStatus
+	mobileNo 
+	board
+	grade
+	subjects []
+	shortDesc
+	about
+	lat
+	lng
+	fullAddress
+	city ref
+	state ref
+	country ref
+	galleryImages[]
+	status
+	createdAt
+	updatedAt
