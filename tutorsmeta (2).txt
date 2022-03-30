@@ -25,7 +25,6 @@ teachers
 	mobileVisible
 	profileVisible
 	emailVerified
-	mobileVerified
 	pincode
 	landmark
 	hourlyRate
@@ -38,26 +37,31 @@ teachers
 	city ref
 	state ref
 	country ref
-	boards [] ref
-	grades [] ref
-	subjects []
-	galleryImages[] ref
+	ratingtestimonials[] ref testimonal
 	educations [] ref
 	experiences [] ref
 	certifications[] ref
+	galleryImages[] ref
+
+	boards [] ref
+	grades [] ref
+	subjects []
+	
 	idProofs [] ref
-	availablity []
-	areaServe[] ref location
-	testimonials[] ref testimonal
-	teachingMode [Online/offline]
-	teachingMedium [] ref languages
-	readyToTravel [true,false]
-	travelDistance 
-	featured
 	status
 	createdAt
 	updatedAt
 
+\\featured
+	availablity []
+	teachingMode [Online/offline]
+	teachingMedium [] ref languages
+	readyToTravel [true,false]
+	travelDistance 
+
+	areaServe[] ref location	
+	
+	
 
 board
 	
@@ -98,7 +102,7 @@ subjects
 education
 
 	teacherId
-	subjectId
+ 	subjectId
 	university
 	degreeType
 	startYear
@@ -159,13 +163,16 @@ student
 	lastName
 	userId
 	profilePic
-	mobileNo 
-	schoolId
+	mobileNo
 	gendor
+ 	about
+	schoolId
+	
 	board
 	grade
 	subjects []
-	about
+	
+
 	lat
 	lng
 	fullAddress
