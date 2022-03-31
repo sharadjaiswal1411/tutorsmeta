@@ -9,9 +9,11 @@ const { sendMail } = require('../../email/email');
 
 
 const register = async (req, res) => {
+     
     try {
         let {name, email, password,phoneCode,mobileNumber,deviceType,deviceToken,roleId } = req.body;
         email = email.toLowerCase()
+       
         const userDetails = await User.findOne({ email });
         if (userDetails) {
             return sendCustomError({}, res, 0, 'Email already registered.')
@@ -51,6 +53,7 @@ const register = async (req, res) => {
             }
         });
     } catch (error) {
+        
         return sendCustomError({}, res, error.code || 0, error.message)
     }
 };
@@ -70,7 +73,7 @@ const login = async (req, res) => {
         }
         if (userDetails) {
             let token = await genrateUserToken({ email: userDetails.email, userId: userDetails.id,roleId:userDetails.roleId });
-              
+               
             let user = await User.findOneAndUpdate({ _id: ObjectId(userDetails.id) },
                 { $set: { accessToken: token } },
                 { new: true });

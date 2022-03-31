@@ -30,7 +30,7 @@ const create = async (req, res) => {
 
 const view = async (req, res) => {
 let {role_id}=     req.params;
-     const roleDetails = await Role.findOne({ name : role_id});
+     const roleDetails = await Role.findOne({ _id : role_id});
 
      if(roleDetails)
           return sendSuccess(roleDetails, res, 200, "Roles details.");
@@ -40,7 +40,20 @@ let {role_id}=     req.params;
 }
 
 
-const vieww = async (req, res) => {}
+const getroleid = async (req, res) => {
+    
+let {name}=     req.params;
+
+
+const roleDetails = await Role.findOne({ name : name});
+console.log(  roleDetails._id)
+if(roleDetails)
+     {sendSuccess(roleDetails._id , res, 200, "Roles details.");
+     return roleDetails._id;}
+else
+  return sendCustomError({}, res, 500, "Error in fetching role details.")
+
+}
 // const vieww = async (req, res) => {
 //     let {name}=     req.params;
 //          const roleDetails = await Role.findOne({ name: name});
@@ -181,6 +194,7 @@ const destroy = async (req, res) => {
 module.exports = {
     create,
     view,
+    getroleid,
     update,
     listAll,
     destroy,
