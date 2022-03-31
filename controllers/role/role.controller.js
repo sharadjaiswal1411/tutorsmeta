@@ -30,7 +30,7 @@ const create = async (req, res) => {
 
 const view = async (req, res) => {
 let {role_id}=     req.params;
-     const roleDetails = await Role.findOne({ _id: role_id});
+     const roleDetails = await Role.findOne({ name : role_id});
 
      if(roleDetails)
           return sendSuccess(roleDetails, res, 200, "Roles details.");
@@ -38,6 +38,19 @@ let {role_id}=     req.params;
        return sendCustomError({}, res, 500, "Error in fetching role details.")
 
 }
+
+
+const vieww = async (req, res) => {}
+// const vieww = async (req, res) => {
+//     let {name}=     req.params;
+//          const roleDetails = await Role.findOne({ name: name});
+    
+//          if(roleDetails)
+//               return sendSuccess(roleDetails, res, 200, "Roles details.");
+//          else
+//            return sendCustomError({}, res, 500, "Error in fetching role details.")
+    
+//     }
 
 const update = async (req, res) => {
    let {name,status}=     req.body;
