@@ -5,7 +5,7 @@ const { User, ObjectId } = require('../../models/user');
 const { Otp } = require('../../models/otp');
 const { PASSWORD } = require('../../constant/common');
 const { sendMail } = require('../../email/email');
-
+const { Role } = require('../../models/role');
 
 
 const register = async (req, res) => {
@@ -13,7 +13,7 @@ const register = async (req, res) => {
     try {
         let {name, email, password,phoneCode,mobileNumber,deviceType,deviceToken,roleId } = req.body;
         email = email.toLowerCase()
-       
+ console.log("register");       
         const userDetails = await User.findOne({ email });
         if (userDetails) {
             return sendCustomError({}, res, 0, 'Email already registered.')
@@ -24,6 +24,16 @@ const register = async (req, res) => {
             return sendCustomError({}, res, 0, 'Mobile number already registered.')
         }
 
+
+
+        
+// const roleDetails = await Role.findOne({ name : roleId});
+// console.log(  roleDetails._id)
+// if(roleDetails)
+//      {sendSuccess(roleDetails._id , res, 200, "Roles details.");
+//      roleId=roleDetails._id;}
+// else
+//   return sendCustomError({}, res, 500, "Error in fetching role details.")
 
         const salt = bcrypt.genSaltSync(PASSWORD.SALT_LENGTH);
         password = bcrypt.hashSync(password.trim(), salt);
