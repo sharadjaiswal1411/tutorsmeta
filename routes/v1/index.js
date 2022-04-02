@@ -35,6 +35,7 @@ const scheduleRouter = require('./schedule');
 const instructorRouter = require('./instructor');
 const sectionRouter = require('./section');
 const fileRouter = require('./file');
+const subjectRouter = require('./subject');
 
 
 
@@ -69,7 +70,7 @@ router.use('/category', categoryRouter);
 router.use('/instructor', instructorRouter);
 router.use('/branch', branchRouter);
 router.use('/file', fileRouter);
-
+router.use('/subject', subjectRouter);
 
 
 module.exports = router;

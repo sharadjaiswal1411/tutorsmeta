@@ -4,18 +4,19 @@ const {uploadFile}= require('../../helper/fileRelocation');
 const  slugify = require('slugify');
 const { unlink } = require('fs');
 
-
+ 
 const create = async (req, res) => {
     
-let {branch,parent,title,banner,featured,image,description,metaTitle,metaDescription,status} = req.body;
-let slug=slugify(title.toLowerCase().trim());
+let {name,banner,featured,image,description,metaTitle,metaDescription,status} = req.body;
+let slug=slugify(name.toLowerCase().trim());
 
-  let requestData={branch,parent,featured,title,slug,banner,image,description,metaTitle,metaDescription,status};
+  let requestData={featured,name,slug,banner,image,description,metaTitle,metaDescription,status};
   let conditions={};
 
-  if(requestData.title){
+  if(requestData.name){
 
-    conditions={title: { $regex: '.*' + requestData.title + '.*' }};
+    conditions={name:  { $regex: '.*' + requestData.name + '.*' }
+    };
 
 }
 let countData= await  Category.count(conditions);
