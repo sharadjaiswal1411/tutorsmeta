@@ -1,4 +1,4 @@
-const {Category, ObjectId} = require('../../models/category');
+const { SubCategory, ObjectId} = require('../../models/subcategory');
 const {sendCustomError,sendSuccess}= require('../../helper/response');
 const {uploadFile}= require('../../helper/fileRelocation');
 const  slugify = require('slugify');
@@ -7,10 +7,10 @@ const { unlink } = require('fs');
  
 const create = async (req, res) => {
     
-let {name,banner,image,description,metaTitle,metaDescription,status} = req.body;
+let {name,categoryId,banner,image,description,metaTitle,metaDescription,status} = req.body;
 let slug=slugify(name.toLowerCase().trim());
 
-  let requestData={name,slug,banner,image,description,metaTitle,metaDescription,status};
+  let requestData={name,categoryId,slug,banner,image,description,metaTitle,metaDescription,status};
   let conditions={};
 
   if(requestData.name){
@@ -19,7 +19,7 @@ let slug=slugify(name.toLowerCase().trim());
     };
 
 }
-let countData= await  Category.countDocuments(conditions);
+let countData= await  SubCategory.countDocuments(conditions);
 
 if(countData==0){
     if (requestData.image) {
@@ -39,19 +39,19 @@ if(countData==0){
       }
     }
  }
-  let newCategory = new Category(requestData);
+  let newSubCategory = new SubCategory(requestData);
 
-   newCategory.save(async (err, data) => {
+   newSubCategory.save(async (err, data) => {
     if(err){
         console.log("err",err)
         if(err.code==11000){
-            return sendCustomError({}, res, 500, 'Category already exists.');
+            return sendCustomError({}, res, 500, 'SubCategory already exists.');
         }else{
-             return sendCustomError({}, res, 500, 'Error in adding category.');
+             return sendCustomError({}, res, 500, 'Error in adding subcategory.');
         }
        
     }else{
-          return sendSuccess(data, res, 200, "Category created successfully.");
+          return sendSuccess(data, res, 200, "SubCategory created successfully.");
     }
 
    })
@@ -59,28 +59,28 @@ if(countData==0){
  
 
 const view = async(req,res) =>{
-    let{category_id} = req.params;
-    let categoryDetails = await Category.findOne({_id:category_id}).populate('branch',{ title: 1,_id:1 }).populate('parent', { title: 1,_id:1 });
-    if(categoryDetails)
-        return sendSuccess({categoryDetails}, res, 200, "Category Details");
+    let{subcategory_id} = req.params;
+    let subcategoryDetails = await SubCategory.findOne({_id:subcategory_id}).populate('branch',{ title: 1,_id:1 }).populate('parent', { title: 1,_id:1 });
+    if(subcategoryDetails)
+        return sendSuccess({subcategoryDetails}, res, 200, "SubCategory Details");
     else
-        return sendCustomError({}, res, 500, "Error in fetching category")
+        return sendCustomError({}, res, 500, "Error in fetching subcategory")
 }
 
 
 const update =async(req, res) =>{
-let {name,banner,image,description,metaTitle,metaDescription,status}= req.body;
-   let {category_id}=req.params;
+let {name,categoryId,banner,image,description,metaTitle,metaDescription,status}= req.body;
+   let {subcategory_id}=req.params;
    if(name)
     {  let slug=slugify(name.toLowerCase().trim());}
    try{
-    const categoryDetails = await Category.findOne({ _id: category_id});
-    if(categoryDetails){
-        if(categoryDetails.image!==image){
+    const subcategoryDetails = await SubCategory.findOne({ _id: subcategory_id});
+    if(subcategoryDetails){
+        if(subcategoryDetails.image!==image){
             try{
                 image = await uploadFile(image, slug);
-                if(categoryDetails.image && categoryDetails.image!="" && categoryDetails.image!==image){
-                    unlink(categoryDetails.image, (err) => {
+                if(subcategoryDetails.image && subcategoryDetails.image!="" && subcategoryDetails.image!==image){
+                    unlink(subcategoryDetails.image, (err) => {
                         if (err) 
                          console.log(err);
                     });
@@ -91,11 +91,11 @@ let {name,banner,image,description,metaTitle,metaDescription,status}= req.body;
           }
         }
 
-        if(categoryDetails.banner!==banner){
+        if(subcategoryDetails.banner!==banner){
             try{
                 banner=  await uploadFile(banner, slug);
-                if(categoryDetails.banner && categoryDetails.banner!="" && categoryDetails.banner!==banner){
-                    unlink(categoryDetails.banner, (err) => {
+                if(subcategoryDetails.banner && subcategoryDetails.banner!="" && subcategoryDetails.subbanner!==banner){
+                    unlink(subcategoryDetails.banner, (err) => {
                         if (err) 
                         console.log('err',err);
                     });
@@ -105,31 +105,31 @@ let {name,banner,image,description,metaTitle,metaDescription,status}= req.body;
             banner=banner;
           }
         }
-            let category = await Category.findOneAndUpdate({ _id: ObjectId(categoryDetails.id) },
-                { $set: {name,banner,image,description,metaTitle,metaDescription,status} },
+            let subcategory = await SubCategory.findOneAndUpdate({ _id: ObjectId(subcategoryDetails.id) },
+                { $set: {name,categoryId,banner,image,description,metaTitle,metaDescription,status} },
                 { new: true });
-            return sendSuccess(category, res, 200, "Category updated successfully.");
+            return sendSuccess(subcategory, res, 200, "SubCategory updated successfully.");
     }else{ 
-            return sendCustomError({}, res, 500, "Error in updating category.")
+            return sendCustomError({}, res, 500, "Error in updating subcategory.")
     } 
    }
    catch(e){
-      return sendCustomError({}, res, e.code, "Error in updating category.")
+      return sendCustomError({}, res, e.code, "Error in updating subcategory.")
    }
 }
 
 
 
 const destroy = async(req, res) =>{
-let {category_id} = req.params;
+let {subcategory_id} = req.params;
 
-const categoryDetails = await Category.findOne({_id:category_id});
-   if(categoryDetails){
-   	await Category.deleteOne({_id:category_id});
-   return sendSuccess(categoryDetails, res, 200, "Category deleted successfully")
+const subcategoryDetails = await SubCategory.findOne({_id:subcategory_id});
+   if(subcategoryDetails){
+   	await SubCategory.deleteOne({_id:subcategory_id});
+   return sendSuccess(subcategoryDetails, res, 200, "SubCategory deleted successfully")
 
    }else{
-   	return sendCustomError({}, res, 500, "Error i deleting category")
+   	return sendCustomError({}, res, 500, "Error i deleting subcategory")
 }
 }
 
@@ -156,7 +156,7 @@ let current_page= parseInt((req.query.current_page)?req.query.current_page:1);
      }
      if(status.length>0 && search_text.length==0 ){
        
-        conditions={status:status }
+        conditions={title:status }
      }
 
      if(status.length==0 && search_text.length>0 ){
@@ -164,7 +164,7 @@ let current_page= parseInt((req.query.current_page)?req.query.current_page:1);
         conditions={title: { $regex: '.*' + search_text + '.*','$options' : 'i' } }
      }
 
-    let total_records= await Category.countDocuments(conditions);
+    let total_records= await SubCategory.countDocuments(conditions);
 
     let total_pages=Math.ceil(total_records/per_page);
     let meta={
@@ -174,12 +174,12 @@ let current_page= parseInt((req.query.current_page)?req.query.current_page:1);
         total_records:total_records
     }
 
-    Category.find(conditions).populate("branch", { title: 1,_id:1 }).limit(per_page).skip(offset).sort(order_by).then(results => {
+    SubCategory.find(conditions).populate("branch", { title: 1,_id:1 }).limit(per_page).skip(offset).sort(order_by).then(results => {
         let data={
             'results':results,
             'meta':meta
         }
-        return sendSuccess(data, res, 200, "Categories list."); 
+        return sendSuccess(data, res, 200, "SubCategories list."); 
     });
 }
 
@@ -192,7 +192,7 @@ const search = async (req, res) => {
     if(field_name.length>0 && order.length>0 ){
     order_by[field_name]=order;
     }else{
-            order_by['title']=1;
+            order_by['name']=1;
     }
     let conditions={status:'ACTIVE'};
 
@@ -200,7 +200,7 @@ const search = async (req, res) => {
 
         conditions={status:'ACTIVE', title: { $regex: '.*' + search_text + '.*' ,'$options' : 'i'}};
     }
-    Category.find(conditions,{_id:1,title:1,sort:order_by}, function(err, results) {
+    SubCategory.find(conditions,{_id:1,name:1,sort:order_by}, function(err, results) {
      
         // let data={
         //     'results':results 

@@ -6,6 +6,7 @@ module.exports = {
 	create:{
      
      name:Joi.string().required(),
+     categoryId:Joi.string(),
     // parent:Joi.allow(""),
      //title:Joi.string().required(),
      slug:Joi.allow(""),
@@ -20,6 +21,7 @@ module.exports = {
 	update:{
      
      name:Joi.string(),
+     categoryId:Joi.string(),
      //parent:Joi.allow(""),
      //title:Joi.string().required(),
      //featured:Joi.string().valid('TRUE', 'FALSE'),

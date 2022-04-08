@@ -22,16 +22,21 @@ const slugValidator = [
   })
 ];
 
-const CategorySchema = new mongoose.Schema({
+const SubCategorySchema = new mongoose.Schema({
 
 name: {
   type: String,
 //     type:String,
-// enum : ['TEACHER','STUDENT','ADMIN'],
+// enum : ['TEACHER','STUD ENT','ADMIN'],
   required: true,
   trim: true,
-  unique: [true, 'Category has already registered.'],
+  unique: [true, 'SubCategory has already registered.'],
   validate: nameValidator
+},
+categoryId: {
+    type: mongoose.Schema.Types.ObjectId, "ref": "categories",
+    required: true,
+    trim: true
 },
 
 status:{            
@@ -81,4 +86,4 @@ status:{
 
 
 
-module.exports= { Category : db.model('categories', CategorySchema), ObjectId };
+module.exports= { SubCategory : db.model('subcategories', SubCategorySchema), ObjectId };
