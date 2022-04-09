@@ -5,9 +5,9 @@ const db = require('../config/database').getUserDB();
 
 
 
-const BoardsSchema = new mongoose.Schema({
+const SchoolSchema = new mongoose.Schema({
 
-  title: {
+  name: {
     type:String,
     trim: true,
     required: true,
@@ -60,4 +60,4 @@ updated_at: {
 
 
 
-module.exports= { Boards : db.model('boards', BoardsSchema), ObjectId };
+module.exports= { School : db.model('school', SchoolSchema), ObjectId };

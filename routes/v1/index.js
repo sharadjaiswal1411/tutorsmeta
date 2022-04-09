@@ -9,8 +9,11 @@ const authRouter = require('./auth');
 const roleRouter = require('./role');
 const categoryRouter = require('./category');
 const subcategoryRouter = require('./subcategory');
+const classRouter = require('./class');
+const boardRouter = require('./board');
 const branchRouter = require('./branch');
 const cityRouter = require('./city');
+const stateRouter = require('./state');
 const event_registrationRouter = require('./event_registration');
 const company_typeRouter = require('./company_type');
 const faqRouter = require('./faq');
@@ -37,7 +40,8 @@ const instructorRouter = require('./instructor');
 const sectionRouter = require('./section');
 const fileRouter = require('./file');
 const subjectRouter = require('./subject');
-
+const schoolRouter = require('./school');
+const membershipRouter = require('./membership');
 
 
 router.use('/user', userRouter);
@@ -45,6 +49,7 @@ router.use('/auth', authRouter);
 router.use('/role', roleRouter);
 router.use('/enquiry', enquiryRouter);
 router.use('/city', cityRouter);
+router.use('/state', stateRouter);
 router.use('/otp', otpRouter);
 router.use('/country', countryRouter);
 router.use('/company_type', company_typeRouter);
@@ -69,10 +74,14 @@ router.use('/section', sectionRouter);
 router.use('/schedule', scheduleRouter);
 router.use('/category', categoryRouter);
 router.use('/subcategory', subcategoryRouter);
+router.use('/class', classRouter);
 router.use('/instructor', instructorRouter);
 router.use('/branch', branchRouter);
 router.use('/file', fileRouter);
 router.use('/subject', subjectRouter);
+router.use('/board', boardRouter);
+router.use('/school', schoolRouter);
+router.use('/membership', membershipRouter);
 
 
 module.exports = router;

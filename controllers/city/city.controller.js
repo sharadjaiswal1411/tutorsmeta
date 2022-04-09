@@ -6,12 +6,14 @@ const { unlink } = require('fs');
 
 
 const create = async (req, res) => {
-let {title,description,status,image} =  req.body;
-let slug=slugify(title.toLowerCase().trim());
-  let requestData={title,slug,description,status,image};
+let {name,description,image,status,  state_id,state_code,  country_id,country_code,latitude,longitude,created_at,updated_at,flag,wikiDataId 
+} =  req.body;
+let slug=slugify(name.toLowerCase().trim());
+  let requestData={name,description,image,status,  state_id,state_code,  country_id,country_code,latitude,longitude,created_at,updated_at,flag,wikiDataId 
+,slug};
   let conditions={};
-  if(requestData.title){
-    conditions={title: { $regex: '.*' + requestData.title + '.*' }};
+  if(requestData.name){
+    conditions={name: { $regex: '.*' + requestData.name + '.*' }};
 }
 let countData= await  City.count(conditions);
 
@@ -59,9 +61,10 @@ const view = async (req, res) => {
 }
 
 const update = async (req, res) => {
- let {title,description,status,image}= req.body;
+ let {name,description,image,status,  state_id,state_code,  country_id,country_code,latitude,longitude,created_at,updated_at,flag,wikiDataId 
+}= req.body;
    let {city_id}=req.params;
-   let slug=slugify(title.toLowerCase().trim());
+   let slug=slugify(name.toLowerCase().trim());
    try{
     const cityDetails = await City.findOne({ _id: city_id});
     if(cityDetails){
@@ -80,7 +83,8 @@ const update = async (req, res) => {
           }
         }
             let city = await City.findOneAndUpdate({ _id: ObjectId(cityDetails.id) },
-                { $set: { title,description,status,image} },
+                { $set: { name,description,image,status,  state_id,state_code,  country_id,country_code,latitude,longitude,created_at,updated_at,flag,wikiDataId 
+} },
                 { new: true });
            
             return sendSuccess(city, res, 200, "City updated successfully.");
@@ -119,7 +123,7 @@ const listAll = async (req, res) => {
 
     if(status.length>0 && search_text.length>0){
 
-        conditions={ status:status,title: { $regex: '.*' + search_text + '.*' ,'$options' : 'i' }};
+        conditions={ status:status,name: { $regex: '.*' + search_text + '.*' ,'$options' : 'i' }};
 
     }
     if(status.length>0 && search_text.length==0){
@@ -129,7 +133,7 @@ const listAll = async (req, res) => {
     }
     if(status.length==0 && search_text.length>0){
 
-        conditions={title: { $regex: '.*' + search_text + '.*' ,'$options' : 'i' }};
+        conditions={name: { $regex: '.*' + search_text + '.*' ,'$options' : 'i' }};
 
     }
     
@@ -163,15 +167,15 @@ const search = async (req, res) => {
     if(field_name.length>0 && order.length>0 ){
     order_by[field_name]=order;
     }else{
-            order_by['title']=1;
+            order_by['name']=1;
     }
     let conditions={status:'ACTIVE'};
 
     if(search_text.length>0){
 
-        conditions={ status:'ACTIVE',title: { $regex: '.*' + search_text + '.*' ,'$options' : 'i'}};
+        conditions={ status:'ACTIVE',name: { $regex: '.*' + search_text + '.*' ,'$options' : 'i'}};
     }
-    City.find(conditions,{_id:1,title:1,sort:order_by}, function(err, results) {
+    City.find(conditions,{_id:1,name:1,sort:order_by}, function(err, results) {
         // let data={
         //     'results':results
         // }

@@ -1,27 +1,29 @@
-const {Country, ObjectId} = require('../../models/country');
+const {State, ObjectId} = require('../../models/state');
 const {sendCustomError,sendSuccess}= require('../../helper/response');
 const  slugify = require('slugify');
 
 
 const create = async (req, res) => {
     
-let {name,iso3,numeric_code,iso2,phonecode,capital,currency,currency_name,currency_symbol,tld,native,region,subregion,timezones,translations,latitude,longitude,emoji,emojiU,created_at,updated_at,flag,wikiDataId} = req.body;
+let {name,  country_id,country_code,fips_code,iso2,type,latitude,longitude,created_at,updated_at,flag,wikiDataId 
+} = req.body;
 let slug=slugify(name.toLowerCase().trim());
-  let requestData={name,iso3,numeric_code,iso2,phonecode,capital,currency,currency_name,currency_symbol,tld,native,region,subregion,timezones,translations,latitude,longitude,emoji,emojiU,created_at,updated_at,flag,wikiDataId,slug};
-  let newCountry = new Country(requestData);
+  let requestData={name,  country_id,country_code,fips_code,iso2,type,latitude,longitude,created_at,updated_at,flag,wikiDataId 
+,slug};
+  let newState = new State(requestData);
 
-   newCountry.save(async (err, data) => {
+   newState.save(async (err, data) => {
     if(err){
         
         if(err.code==11000){
-            return sendCustomError({}, res, 500, 'Country already exists.');
+            return sendCustomError({}, res, 500, 'State already exists.');
         }else{
-             return sendCustomError({}, res, 500, 'Error in adding country.');
+             return sendCustomError({}, res, 500, 'Error in adding State.');
         }
        
     }else{
 
-          return sendSuccess(data, res, 200, "Country created successfully.");
+          return sendSuccess(data, res, 200, "State created successfully.");
     
     }
 
@@ -32,32 +34,33 @@ let slug=slugify(name.toLowerCase().trim());
 
 
 const view = async(req,res) =>{
-   let {country_id}=     req.params;
-     const countryDetails = await Country.findOne({ _id: country_id});
+   let {state_id}=     req.params;
+     const stateDetails = await State.findOne({ _id: state_id});
 
-     if(countryDetails)
-          return sendSuccess(countryDetails, res, 200, "Country details.");
+     if(stateDetails)
+          return sendSuccess(stateDetails, res, 200, "State details.");
      else
-       return sendCustomError({}, res, 500, "Error in fetching country details.")
+       return sendCustomError({}, res, 500, "Error in fetching State details.")
 }
 
 const update =async(req, res) =>{
-let {name,iso3,numeric_code,iso2,phonecode,capital,currency,currency_name,currency_symbol,tld,native,region,subregion,timezones,translations,latitude,longitude,emoji,emojiU,created_at,updated_at,flag,wikiDataId,slug}= req.body;
+let {name,  country_id,country_code,fips_code,iso2,type,latitude,longitude,created_at,updated_at,flag,wikiDataId 
+,slug}= req.body;
 
-   let {country_id}=req.params;
+   let {state_id}=req.params;
    try{
-    const countryDetails = await Country.findOne({ _id: country_id});
-    if(countryDetails){
+    const stateDetails = await State.findOne({ _id: state_id});
+    if(stateDetails){
            
-            let country = await Country.findOneAndUpdate({ _id: ObjectId(countryDetails.id) },
+            let state = await State.findOneAndUpdate({ _id: ObjectId(stateDetails.id) },
                 { $set: {name} },
                 { new: true });
            
-            return sendSuccess(country, res, 200, "Country updated successfully.");
+            return sendSuccess(state, res, 200, "State updated successfully.");
        
     }else{
           
-            return sendCustomError({}, res, 500, "Error in updating country.")
+            return sendCustomError({}, res, 500, "Error in updating State.")
 
     }
           
@@ -65,20 +68,20 @@ let {name,iso3,numeric_code,iso2,phonecode,capital,currency,currency_name,curren
 
    }
    catch(e){
-      return sendCustomError({}, res, e.code, "Error in updating country.")
+      return sendCustomError({}, res, e.code, "Error in updating State.")
    }
 }
 
 const destroy = async(req, res) =>{
-let {country_id} = req.params;
+let {state_id} = req.params;
 
-const countryDetails = await Country.findOne({_id:country_id});
-   if(countryDetails){
-    await Country.remove({_id:country_id});
-   return sendSuccess(countryDetails, res, 200, "Country deleted successfully")
+const stateDetails = await State.findOne({_id:state_id});
+   if(stateDetails){
+    await State.remove({_id:state_id});
+   return sendSuccess(stateDetails, res, 200, "State deleted successfully")
 
    }else{
-    return sendCustomError({}, res, 500, "Error i deleting country")
+    return sendCustomError({}, res, 500, "Error i deleting state")
 }
 }
 
@@ -104,7 +107,7 @@ let current_page= parseInt((req.query.current_page)?req.query.current_page:1);
     }
 
 
-    let total_records= await Country.count(conditions);
+    let total_records= await State.count(conditions);
 
     let total_pages=Math.ceil(total_records/per_page);
     let meta={
@@ -114,7 +117,7 @@ let current_page= parseInt((req.query.current_page)?req.query.current_page:1);
         total_records:total_records
     }
 
-    Country.find(conditions,{}, { skip: offset, limit: per_page,sort:order_by }, function(err, results) {
+    State.find(conditions,{}, { skip: offset, limit: per_page,sort:order_by }, function(err, results) {
         let data={
             'results':results,
             'meta':meta
@@ -144,7 +147,7 @@ const search = async (req, res) => {
 
     }
 
-    Country.find(conditions,{_id:1,name:1,sort:order_by}, function(err, results) {
+    State.find(conditions,{_id:1,name:1,sort:order_by}, function(err, results) {
      
         // let data={
         //     'results':results

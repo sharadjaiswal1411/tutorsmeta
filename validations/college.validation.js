@@ -12,7 +12,7 @@ create:{
 	affiliation:Joi.string().allow(""),
 	banner:Joi.allow(""),
 	address:Joi.string().allow(""),
-	type:Joi.string().required(""),
+	type:Joi.string(),
 	status:Joi.string().required(""),
 	
 },
@@ -27,7 +27,7 @@ update:{
 	affiliation:Joi.string().allow(""),
 	banner:Joi.allow(""),
 	address:Joi.string().allow(""),
-	type:Joi.string().required(""),
+	type:Joi.string(),
 	status:Joi.string().required(""),
 	
 }

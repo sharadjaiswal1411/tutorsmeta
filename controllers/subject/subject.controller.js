@@ -123,7 +123,7 @@ const listAll = async (req, res) => {
     }
 
 
-    let total_records= await Subject.count(conditions);
+    let total_records= await Subject.countDocuments(conditions);
 
     let total_pages=Math.ceil(total_records/per_page);
     let meta={
@@ -182,7 +182,7 @@ const destroy = async (req, res) => {
      const subjectDetails = await Subject.findOne({ _id: subject_id});
 
      if(subjectDetails){
-        await s.remove({ _id: subject_id});
+        await Subject.remove({ _id: subject_id});
 
         return sendSuccess(subjectDetails, res, 200, "Subject deleted successfully.");
 

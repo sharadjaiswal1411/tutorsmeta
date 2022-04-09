@@ -215,7 +215,7 @@ const destroy = async (req, res) => {
      const collegeDetails = await College.findOne({ _id: college_id});
 
      if(collegeDetails){
-        await College.remove({ _id: college_id});
+        await College.deleteOne({ _id: college_id});
 
         return sendSuccess(collegeDetails, res, 200, "College deleted successfully.");
 

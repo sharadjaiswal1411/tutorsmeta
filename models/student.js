@@ -1,111 +1,149 @@
 const mongoose = require('mongoose');
 const validate = require('mongoose-validator');
 const ObjectId = mongoose.Types.ObjectId;
+const db = require('../config/database').getUserDB();
 const { sendCustomError } = require('../helper/response');
 const bcrypt = require('bcryptjs');
-const db = require('../config/database').getUserDB();
-
-const titleValidator = [
-  validate({
-    validator: 'isLength',
-    arguments: [0, 255],
-    message: 'Name must not exceed {ARGS[1]} characters.'
-  })
+const nameValidator = [
+    validate({
+        validator: 'isLength',
+        arguments: [0, 40],
+        message: 'Name must not exceed {ARGS[1]} characters.'
+    })
 ];
 
-const slugValidator = [
-  validate({
-    validator: 'isLength',
-    arguments: [0, 255],
-    message: 'Username must not exceed {ARGS[1]} characters.'
-  })
+const emailValidator = [
+    validate({
+        validator: 'isLength',
+        arguments: [0, 60],
+        message: 'Email must not exceed {ARGS[1]} characters.'
+    }),
+    validate({
+        validator: 'isEmail',
+        message: 'Email must be valid.'
+    })
 ];
+
+
 
 const StudentSchema = new mongoose.Schema({
-  name: {
-    type:String,
-    trim: true,
-    required: true,
-    validate: titleValidator
-  },
-  username: {
-    type:String,
-    trim: true,
-    required: true,
-    unique: [true, 'The username must be unique.'],
-    validate: slugValidator
-  },
-  email: {
-    type:String,
-    trim: true,
-    required: true,
-    unique: [true, 'The email must be unique.'],
+
+  userId:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'users',//teacher,organization,student
+    default:null
+ },
+    //first
+    name: {
+        type: String,
+        required:[true, 'Name is required.'],
+        trim: true,
+        validate: nameValidator,
+        default:null
+    },
+    // lastname: {
+    //     type: String,
+    //   //   required:[true, 'Name is required.'],
+    //     trim: true,
+    //     validate: nameValidator,
+    //     default:null
+    // },
+    email: {
+        type: String,
+         required: [true, 'Email is required.'],
+        unique: [true, 'Email has already registered.'],
+        validate: emailValidator,
+        trim: true
+    }, 
+
+    password: {
+        type: String,
+        trim: true,
+        required: [true, 'Password is required.'],
+    },
    
-  },
-  password:{
+    phoneCode: {
+        type: String,
+        trim: true,
+        required:[true, 'phoneCode is required.'],
+    },
+    mobileNumber: {
+        type: Number,
+        trim: true,
+        required:[true, 'mobileNumber is required.'],
+
+    }, 
+    gender: {
+        type: String,
+        enum : ['MALE','FEMALE','OTHER'],
+        default: 'MALE'
+    },
+    image: {
+        type: String,
+        trim: true , 
+        default:null
+    },
+    cityId: {
+         type: mongoose.Schema.Types.ObjectId,
+         ref:'city',
+        trim: true  
+    },
+
+    status:{            
+    //     type: Boolean,    // 0- inactive, 1- active, 2- deleted
+    //     default:false,
+    //     required:[true, 'status is required.'],
+    //
     type: String,
-    required:false,
-    default:0
+    enum : ['ACTIVE','INACTIVE'],
+    default: 'INACTIVE'
+
 },
-  phone: {
-    type:Number,
-    trim: true,
-    required: false,
-    unique: [true, 'The phone must be unique.'],
-   
-   
-  },
-  image: {
-    type:String,
-    trim: true,
-    required: false,
-    default:null
-  },
-  address: {
-    type:String,
-    trim: true,
-    required: false,
-    default:null
-  },
-  experience: {
-    type:String,
-    trim: true,
-    required: [true,'experience is require in number'],
-    default:0
-   
-  },
-
-  college: {
-        type: mongoose.Schema.Types.ObjectId, "ref": "college",
-        required: true,
+    deviceType: {
+        type: String, // WEB/ ANDROID/ IOS
+        required: [true, 'deviceType is required.'],
         trim: true,
-        default:null
-  },
-  about: {
-    type:String,
-    trim: true,
-    required: false,
-    default:null
-  },
-
-  courses: [{
-        type: mongoose.Schema.Types.ObjectId, "ref": "courses",
-        required: false,
+    },
+    deviceToken: {
+        type: String,
+        default:null,
         trim: true,
-        default:null
-  }],
-  joiningDate:{
+    },
+    accessToken: {
+        type: String,
+        trim: true,
+        default: null
+    },
+    resetToken: {
+            type: String,
+            trim: true,
+            default: null
+    },
+    created_at: {
         type: Date,
         required:[true,'joiningDate is require in Date'],
         default:Date.now
-  },
+        
+    },
+    updated_at: {
+        type: Date,
+        default: null
+    },
+    roleId:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'role',//teacher,organization,student
+        default:null
+     },
+     categories:[
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'category',
+            default:null
+         }
 
-  status: {
-        type: String,
-        enum : ['ACTIVE','INACTIVE'],
-        default: 'INACTIVE'
-  }
+     ]
 }, { timestamps: true, strict: true })
+
 
 StudentSchema.methods.isValidPassword = async function(res,password) {
     try {
@@ -115,4 +153,4 @@ StudentSchema.methods.isValidPassword = async function(res,password) {
     }
 }
 
-module.exports= { Student : db.model('students', StudentSchema), ObjectId };
+module.exports= { Student : db.model('student', StudentSchema), ObjectId };
