@@ -11,27 +11,27 @@ const { unlink } = require('fs');
 
 
 const create = async(req,res) =>{
-let {name,username,email,phone,image,address,experience,college,about,courses,joiningDate,status} =  req.body;
-let slug=slugify(name.toLowerCase().trim());
+let {userId,name,username,email,phone,image,address,experience,college,about,courses,joiningDate,status} =  req.body;
+let slug=slugify(userId.toLowerCase().trim());
        
 
-  let requestData={name,username,email,phone,image,address,experience,college,about,courses,joiningDate,status};
+  let requestData={userId,name,username,email,phone,image,address,experience,college,about,courses,joiningDate,status};
   let conditions={};
-  if(requestData.name){
-    conditions={name: { $regex: '.*' + requestData.name + '.*' }};
-}
-let countData= await  Student.count(conditions);
+//   if(requestData.userId){
+//     conditions={userId: { $regex: '.*' + requestData.userId + '.*' }};
+// }
+// let countData= await  Student.count(conditions);
 
-if(countData==0){
-    if (requestData.image) {
-        try{
-            requestData['image']=  await uploadFile(requestData.image, slug);
-        } 
-      catch(e){
-        requestData['image']=null;
-      }
-    }
- }
+// if(countData==0){
+//     if (requestData.image) {
+//         try{
+//             requestData['image']=  await uploadFile(requestData.image, slug);
+//         } 
+//       catch(e){
+//         requestData['image']=null;
+//       }
+//     }
+//  }
   let newStudent = new Student(requestData);
    
    newStudent.save(async (err, data) => {

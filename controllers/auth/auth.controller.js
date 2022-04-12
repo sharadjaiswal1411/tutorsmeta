@@ -2,11 +2,13 @@ const bcrypt = require('bcryptjs');
 const { sendCustomError, sendSuccess } = require('../../helper/response');
 const { genrateUserToken } = require('../../middlewares/auth-user');
 const { User, ObjectId } = require('../../models/user');
+const { Teacher } = require('../../models/teacher');
+const { Student } = require('../../models/student');
 const { Otp } = require('../../models/otp');
 const { PASSWORD } = require('../../constant/common');
 const { sendMail } = require('../../email/email');
 const { Role } = require('../../models/role');
-
+const  slugify = require('slugify');
 
 const register = async (req, res) => {
      
@@ -58,6 +60,54 @@ const register = async (req, res) => {
                let token = await genrateUserToken({ email: responseData.email, userId: responseData.id,roleId:responseData.roleId });
               
                responseData['accessToken']=token;
+                
+
+               if(userDetails.roleId.name=="TEACHERS"){
+                
+                    let teacherData={
+                        userid:userDetails._id
+                    }
+                    let newTeacher = new Teacher(teacherData);
+                    newTeacher.save(async (err, data) => {
+                        if(err){
+                            console.log("err",err)
+                            if(err.code==11000){
+                                return sendCustomError({}, res, 500, 'teacher already exists.');
+                            }else{
+                                 return sendCustomError({}, res, 500, 'Error in adding Teacher.');
+                            }
+                           
+                        }else{
+                              return sendSuccess(data, res, 200, "teacher created successfully.");
+                        }
+                    
+                       })
+                // newTeacher.save(async (err, data) => {
+                //     console.log("teacherSave",data)
+                // });
+
+               }
+               
+               else if (userDetails.roleId.name=="STUDENT"){
+                let studentData={
+                    userId:userDetails._id
+                }
+                let newStudent = new Student(studentData);
+                newStudent.save(async (err, data) => {
+                    if(err){
+                        console.log("err",err)
+                        if(err.code==11000){
+                            return sendCustomError({}, res, 500, 'student already exists.');
+                        }else{
+                             return sendCustomError({}, res, 500, 'Error in adding student.');
+                        }
+                       
+                    }else{
+                          return sendSuccess(data, res, 200, "student created successfully.");
+                    }
+                
+                   })
+               }
                
                return sendSuccess(responseData, res, 200, "User registered successfully.");
             }

@@ -43,6 +43,8 @@ const subjectRouter = require('./subject');
 const schoolRouter = require('./school');
 const membershipRouter = require('./membership');
 
+const teacherRouter = require('./teacher');
+
 
 router.use('/user', userRouter);
 router.use('/auth', authRouter);
@@ -82,6 +84,8 @@ router.use('/subject', subjectRouter);
 router.use('/board', boardRouter);
 router.use('/school', schoolRouter);
 router.use('/membership', membershipRouter);
+
+router.use('/teacher', teacherRouter);
 
 
 module.exports = router;

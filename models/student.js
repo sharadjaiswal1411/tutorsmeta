@@ -36,42 +36,45 @@ const StudentSchema = new mongoose.Schema({
     //first
     name: {
         type: String,
-        required:[true, 'Name is required.'],
+        ////////////required:[true, 'Name is ////////////required.'],
         trim: true,
         validate: nameValidator,
         default:null
     },
     // lastname: {
     //     type: String,
-    //   //   required:[true, 'Name is required.'],
+    //   //   ////////////required:[true, 'Name is ////////////required.'],
     //     trim: true,
     //     validate: nameValidator,
     //     default:null
     // },
     email: {
         type: String,
-         required: [true, 'Email is required.'],
+         ////////////required: [true, 'Email is ////////////required.'],
         unique: [true, 'Email has already registered.'],
         validate: emailValidator,
-        trim: true
+        trim: true,
+        default:null
     }, 
 
     password: {
         type: String,
         trim: true,
-        required: [true, 'Password is required.'],
+        ////////////required: [true, 'Password is ////////////required.'],
+        default:null
     },
    
     phoneCode: {
         type: String,
         trim: true,
-        required:[true, 'phoneCode is required.'],
+        ////////////required:[true, 'phoneCode is ////////////required.'],
+        default:null
     },
     mobileNumber: {
         type: Number,
         trim: true,
-        required:[true, 'mobileNumber is required.'],
-
+        ////////////required:[true, 'mobileNumber is ////////////required.'],
+        default:null
     }, 
     gender: {
         type: String,
@@ -86,13 +89,14 @@ const StudentSchema = new mongoose.Schema({
     cityId: {
          type: mongoose.Schema.Types.ObjectId,
          ref:'city',
+         default:null,
         trim: true  
     },
 
     status:{            
     //     type: Boolean,    // 0- inactive, 1- active, 2- deleted
     //     default:false,
-    //     required:[true, 'status is required.'],
+    //     ////////////required:[true, 'status is ////////////required.'],
     //
     type: String,
     enum : ['ACTIVE','INACTIVE'],
@@ -101,7 +105,7 @@ const StudentSchema = new mongoose.Schema({
 },
     deviceType: {
         type: String, // WEB/ ANDROID/ IOS
-        required: [true, 'deviceType is required.'],
+        ////////////////required: [false, 'deviceType is //////////////required.'],
         trim: true,
     },
     deviceToken: {
@@ -121,7 +125,7 @@ const StudentSchema = new mongoose.Schema({
     },
     created_at: {
         type: Date,
-        required:[true,'joiningDate is require in Date'],
+       // //////////////required:[true,'joiningDate is require in Date'],
         default:Date.now
         
     },
