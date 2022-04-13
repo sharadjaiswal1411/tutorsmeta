@@ -31,6 +31,7 @@ const countryRouter = require('./country');
 const companyRouter = require('./company');
 const addressRouter = require('./address');
 const studentRouter = require('./student');
+const studentAddressRouter = require('./studentAddress');
 const collegeRouter = require('./college');
 const curriculumRouter = require('./curriculum');
 const courseRouter = require('./course');
@@ -40,10 +41,12 @@ const instructorRouter = require('./instructor');
 const sectionRouter = require('./section');
 const fileRouter = require('./file');
 const subjectRouter = require('./subject');
+const testimonialRouter = require('./testimonial');
 const schoolRouter = require('./school');
 const membershipRouter = require('./membership');
 
 const teacherRouter = require('./teacher');
+const languageRouter = require('./language');
 
 
 router.use('/user', userRouter);
@@ -69,6 +72,7 @@ router.use('/company', companyRouter);
 router.use('/address', addressRouter);
 router.use('/curriculum', curriculumRouter);
 router.use('/student', studentRouter);
+router.use('/studentAddress', studentAddressRouter);
 router.use('/college', collegeRouter);
 router.use('/benefit', benefitRouter);
 router.use('/course', courseRouter);
@@ -81,10 +85,11 @@ router.use('/instructor', instructorRouter);
 router.use('/branch', branchRouter);
 router.use('/file', fileRouter);
 router.use('/subject', subjectRouter);
+router.use('/testimonial', testimonialRouter);
 router.use('/board', boardRouter);
 router.use('/school', schoolRouter);
 router.use('/membership', membershipRouter);
-
+router.use('/language', languageRouter);
 router.use('/teacher', teacherRouter);
 
 

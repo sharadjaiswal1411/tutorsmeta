@@ -11,11 +11,13 @@ const { unlink } = require('fs');
 
 
 const create = async(req,res) =>{
-let {userId,name,username,email,phone,image,address,experience,college,about,courses,joiningDate,status} =  req.body;
+let {userId,about,board,school,college,subcategory,cityId,created_at,updated_at,status
+} =  req.body;
 let slug=slugify(userId.toLowerCase().trim());
        
 
-  let requestData={userId,name,username,email,phone,image,address,experience,college,about,courses,joiningDate,status};
+  let requestData={userId,slug,about,board,school,college,subcategory,cityId,created_at,updated_at,status
+  };
   let conditions={};
 //   if(requestData.userId){
 //     conditions={userId: { $regex: '.*' + requestData.userId + '.*' }};
@@ -95,28 +97,30 @@ const login = async (req, res) => {
 
 
 const update = async(req,res) =>{
-let {name,username,email,phone,image,address,experience,college,about,courses,joiningDate,status}=req.body;
-let slug=slugify(name.toLowerCase().trim());
+let {userId,about,board,school,college,subcategory,cityId,created_at,updated_at,status
+}=req.body;
+let slug=slugify(userId.toLowerCase().trim());
 let {student_id} = req.params;
 try{
 	const studentDetails = await Student.findOne({_id:student_id});
 	if(studentDetails){
-        if(studentDetails.image!==image){
-            try{
-                image = await uploadFile(image, slug);
-                if(studentDetails.image && studentDetails.image!="" && studentDetails.image!==image){
-                    unlink(studentDetails.image, (err) => {
-                        if (err) 
-                         console.log(err);
-                    });
-                }
-            } 
-          catch(e){
-            image=image;
-          }
-        }
+        // if(studentDetails.image!==image){
+        //     try{
+        //         image = await uploadFile(image, slug);
+        //         if(studentDetails.image && studentDetails.image!="" && studentDetails.image!==image){
+        //             unlink(studentDetails.image, (err) => {
+        //                 if (err) 
+        //                  console.log(err);
+        //             });
+        //         }
+        //     } 
+        //   catch(e){
+        //     image=image;
+        //   }
+        // }
         let student = await Student.findOneAndUpdate({_id:ObjectId(studentDetails.id)},
-        {$set: {name,username,email,phone,image,address,experience,college,about,courses,joiningDate,status}},
+        {$set: {userId,slug,about,board,school,college,subcategory,cityId,created_at,updated_at,status
+        }},
         {new: true});
 
         return sendSuccess(student, res, 200, "Student updated successfully")
@@ -151,7 +155,7 @@ let {student_id}=     req.params;
 }
 const view = async (req, res) => {
  let {student_id}=     req.params;
-     const studentDetails = await Student.findOne({ _id: student_id}).populate('courses',{title:1,_id:1}).populate('college',{name:1,_id:1});
+     const studentDetails = await Student.findOne({ _id: student_id}).populate('courses',{title:1,_id:1}).populate('college',{userId:1,_id:1});
 
      if(studentDetails)
           return sendSuccess(studentDetails, res, 200, "Students details.");
@@ -229,11 +233,11 @@ const search = async (req, res) => {
 
     if(search_text.length>0){
 
-        conditions={status:'ACTIVE', name: { $regex: '.*' + search_text + '.*' ,'$options' : 'i'}};
+        conditions={status:'ACTIVE', userId: { $regex: '.*' + search_text + '.*' ,'$options' : 'i'}};
 
     }
 
-    Student.find(conditions,{_id:1,name:1,sort:order_by}, function(err, results) {
+    Student.find(conditions,{_id:1,userId:1,sort:order_by}, function(err, results) {
      
         // let data={
         //     'results':results

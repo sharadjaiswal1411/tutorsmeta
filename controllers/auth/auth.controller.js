@@ -4,6 +4,7 @@ const { genrateUserToken } = require('../../middlewares/auth-user');
 const { User, ObjectId } = require('../../models/user');
 const { Teacher } = require('../../models/teacher');
 const { Student } = require('../../models/student');
+const { StudentAddress } = require('../../models/studentAddress');
 const { Otp } = require('../../models/otp');
 const { PASSWORD } = require('../../constant/common');
 const { sendMail } = require('../../email/email');
@@ -94,6 +95,9 @@ const register = async (req, res) => {
                 }
                 let newStudent = new Student(studentData);
                 newStudent.save(async (err, data) => {
+
+             
+
                     if(err){
                         console.log("err",err)
                         if(err.code==11000){
@@ -103,12 +107,45 @@ const register = async (req, res) => {
                         }
                        
                     }else{
-                          return sendSuccess(data, res, 200, "student created successfully.");
+                        
+
+                         return sendSuccess(data, res, 200, "student created successfully.");
                     }
                 
                    })
+
+                                  
+   // student addres start
+console.log(newStudent._id);               
+let studentAddressData={
+    studentId:newStudent._id
+}
+let newStudentAddress = new StudentAddress(studentAddressData);
+newStudentAddress.save(async (err, data) => {
+
+
+
+    if(err){
+        console.log("err",err)
+        if(err.code==11000){
+            return sendCustomError({}, res, 500, 'student address already exists.');
+        }else{
+             return sendCustomError({}, res, 500, 'Error  in adding student address.');
+        }
+       
+    }else{
+        
+
+         return sendSuccess(data, res, 200, "student address created successfully.");
+    }
+
+   })
+// studentaddress end
                }
-               
+             
+
+
+
                return sendSuccess(responseData, res, 200, "User registered successfully.");
             }
         });

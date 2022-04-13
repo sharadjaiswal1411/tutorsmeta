@@ -69,44 +69,48 @@ const view = async(req,res) =>{
 
 
 const update =async(req, res) =>{
-let {name,categoryId,banner,image,description,metaTitle,metaDescription,status}= req.body;
-   let {teacher_id}=req.params;
-   if(name)
-    {  let slug=slugify(name.toLowerCase().trim());}
-   try{
-    const teacherDetails = await Teacher.findOne({ _id: teacher_id});
-    if(teacherDetails){
-        if(teacherDetails.image!==image){
-            try{
-                image = await uploadFile(image, slug);
-                if(teacherDetails.image && teacherDetails.image!="" && teacherDetails.image!==image){
-                    unlink(teacherDetails.image, (err) => {
-                        if (err) 
-                         console.log(err);
-                    });
-                }
-            } 
-          catch(e){
-            image=image;
-          }
-        }
+let {userid,tagline,shortBio,about,emailVisible,mobileVisible,profileVisible,emailVerified,hourlyRate,teachingSince,cityId,created_at,updated_at,status}= req.body;
 
-        if(teacherDetails.banner!==banner){
-            try{
-                banner=  await uploadFile(banner, slug);
-                if(teacherDetails.banner && teacherDetails.banner!="" && teacherDetails.subbanner!==banner){
-                    unlink(teacherDetails.banner, (err) => {
-                        if (err) 
-                        console.log('err',err);
-                    });
-                }
-            } 
-          catch(e){
-            banner=banner;
-          }
-        }
-            let Teacher = await Teacher.findOneAndUpdate({ _id: ObjectId(teacherDetails.id) },
-                { $set: {name,categoryId,banner,image,description,metaTitle,metaDescription,status} },
+let {teacher_id} = req.params;
+
+
+   if(userid)
+    {  let slug=slugify(userid.toLowerCase().trim());}
+   try{
+
+    const teacherDetails = await Teacher.findOne({_id:teacher_id});
+    if(teacherDetails){
+        // if(teacherDetails.image!==image){
+        //     try{
+        //         image = await uploadFile(image, slug);
+        //         if(teacherDetails.image && teacherDetails.image!="" && teacherDetails.image!==image){
+        //             unlink(teacherDetails.image, (err) => {
+        //                 if (err) 
+        //                  console.log(err);
+        //             });
+        //         }
+        //     } 
+        //   catch(e){
+        //     image=image;
+        //   }
+        // }
+
+        // if(teacherDetails.banner!==banner){
+        //     try{
+        //         banner=  await uploadFile(banner, slug);
+        //         if(teacherDetails.banner && teacherDetails.banner!="" && teacherDetails.subbanner!==banner){
+        //             unlink(teacherDetails.banner, (err) => {
+        //                 if (err) 
+        //                 console.log('err',err);
+        //             });
+        //         }
+        //     } 
+        //   catch(e){
+        //     banner=banner;
+        //   }
+        // }
+            let teacher = await Teacher.findOneAndUpdate({ _id: ObjectId(teacherDetails.id) },
+                { $set: {userid,tagline,shortBio,about,emailVisible,mobileVisible,profileVisible,emailVerified,hourlyRate,teachingSince,cityId,created_at,updated_at,status} },
                 { new: true });
             return sendSuccess(teacher, res, 200, "teacher updated successfully.");
     }else{ 
@@ -114,7 +118,7 @@ let {name,categoryId,banner,image,description,metaTitle,metaDescription,status}=
     } 
    }
    catch(e){
-      return sendCustomError({}, res, e.code, "Error in updating Teacher.")
+      return sendCustomError({}, res, e.code, "Error in updating Teacher .")
    }
 }
 
