@@ -32,6 +32,7 @@ const companyRouter = require('./company');
 const addressRouter = require('./address');
 const studentRouter = require('./student');
 const studentAddressRouter = require('./studentAddress');
+const teacherAddressRouter = require('./teacherAddress');
 const collegeRouter = require('./college');
 const curriculumRouter = require('./curriculum');
 const courseRouter = require('./course');
@@ -44,10 +45,14 @@ const subjectRouter = require('./subject');
 const testimonialRouter = require('./testimonial');
 const schoolRouter = require('./school');
 const membershipRouter = require('./membership');
-
 const teacherRouter = require('./teacher');
 const languageRouter = require('./language');
-
+const educationRouter = require('./education');
+const idproofRouter = require('./idproof');
+const certificationRouter = require('./certification');
+const experienceRouter = require('./experience');
+const featureRouter = require('./feature');
+const galleryimageRouter = require('./galleryimage');
 
 router.use('/user', userRouter);
 router.use('/auth', authRouter);
@@ -73,6 +78,7 @@ router.use('/address', addressRouter);
 router.use('/curriculum', curriculumRouter);
 router.use('/student', studentRouter);
 router.use('/studentAddress', studentAddressRouter);
+router.use('/teacherAddress', teacherAddressRouter);
 router.use('/college', collegeRouter);
 router.use('/benefit', benefitRouter);
 router.use('/course', courseRouter);
@@ -91,6 +97,11 @@ router.use('/school', schoolRouter);
 router.use('/membership', membershipRouter);
 router.use('/language', languageRouter);
 router.use('/teacher', teacherRouter);
-
+router.use('/education', educationRouter);
+router.use('/idproof', idproofRouter);
+router.use('/certification', certificationRouter);
+router.use('/experience', experienceRouter);
+router.use('/galleryimage', galleryimageRouter);
+router.use('/feature', featureRouter);
 
 module.exports = router;

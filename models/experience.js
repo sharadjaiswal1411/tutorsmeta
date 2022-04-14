@@ -11,14 +11,14 @@ const ExperienceSchema = new mongoose.Schema({
         ref: "teachers",
         default:null
     },
-    designationId:{
+    course:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "designation",
+        ref: "subject",
         default:null
     },
-    organisationId:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "organisation",
+    organisation:{
+      type:String,
+      trim: true,
         default:null
     },
   
@@ -49,28 +49,12 @@ const ExperienceSchema = new mongoose.Schema({
    
   },
   location:{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "location",
-    default:null
-},
-  slug: {
+
     type:String,
     trim: true,
     required: true,
-   
-  },
-   metaTitle: {
-    type:String,
-    trim: true,
-    
-    
-  },
- metaDescription: {
-    type:String,
-    trim: true,
-    
-    
-  },
+     default:null
+},
   created_at: {
     type: Date,
     required:[true,'joiningDate is require in Date'],
@@ -80,7 +64,7 @@ const ExperienceSchema = new mongoose.Schema({
 updated_at: {
     type: Date,
     default: null
-},
+}
 
 }, { timestamps: true, strict: true })
 

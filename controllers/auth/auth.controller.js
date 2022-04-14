@@ -5,6 +5,14 @@ const { User, ObjectId } = require('../../models/user');
 const { Teacher } = require('../../models/teacher');
 const { Student } = require('../../models/student');
 const { StudentAddress } = require('../../models/studentAddress');
+const { TeacherAddress } = require('../../models/teacherAddress');
+const { Education } = require('../../models/education');
+const { Idproof } = require('../../models/idproof');
+const { Certification } = require('../../models/certification');
+const { Experience } = require('../../models/experience');
+const { Feature } = require('../../models/feature');
+const { Galleryimage } = require('../../models/galleryimage');
+
 const { Otp } = require('../../models/otp');
 const { PASSWORD } = require('../../constant/common');
 const { sendMail } = require('../../email/email');
@@ -83,7 +91,208 @@ const register = async (req, res) => {
                         }
                     
                        })
-                // newTeacher.save(async (err, data) => {
+
+                       
+   // teacher addres start
+   console.log(newTeacher._id);               
+   let teacherAddressData={
+       teacherId:newTeacher._id
+   }
+   let newTeacherAddress = new TeacherAddress(teacherAddressData);
+   newTeacherAddress.save(async (err, data) => {
+   
+   
+   
+       if(err){
+           console.log("err",err)
+           if(err.code==11000){
+               return sendCustomError({}, res, 500, 'teacher address already exists.');
+           }else{
+                return sendCustomError({}, res, 500, 'Error  in adding teacher address.');
+           }
+          
+       }else{
+           
+   
+            return sendSuccess(data, res, 200, "teacher address created successfully.");
+       }
+   
+      })   
+//    teacher address end
+
+          
+   // teacher education start
+   console.log(newTeacher._id);               
+   let educationData={
+       teacherId:newTeacher._id
+   }
+   let newEducation = new Education(educationData);
+   newEducation.save(async (err, data) => {
+   
+   
+   
+       if(err){
+           console.log("err",err)
+           if(err.code==11000){
+               return sendCustomError({}, res, 500, 'teacher address already exists.');
+           }else{
+                return sendCustomError({}, res, 500, 'Error  in adding teacher address.');
+           }
+          
+       }else{
+           
+   
+            return sendSuccess(data, res, 200, "teacher address created successfully.");
+       }
+   
+      })   
+//    teacher education end
+
+
+   // teacher idproof start
+   console.log(newTeacher._id);               
+   let idproofData={
+       teacherId:newTeacher._id
+   }
+   let newIdproof = new Idproof(idproofData);
+   newIdproof.save(async (err, data) => {
+   
+   
+   
+       if(err){
+           console.log("err",err)
+           if(err.code==11000){
+               return sendCustomError({}, res, 500, 'teacher address already exists.');
+           }else{
+                return sendCustomError({}, res, 500, 'Error  in adding teacher address.');
+           }
+          
+       }else{
+           
+   
+            return sendSuccess(data, res, 200, "teacher address created successfully.");
+       }
+   
+      })   
+//    teacher idproof end
+
+
+
+   // teacher certification start
+   console.log(newTeacher._id);               
+   let certificationData={
+       teacherId:newTeacher._id
+   }
+   let newCertification = new Certification(certificationData);
+   newCertification.save(async (err, data) => {
+   
+   
+   
+       if(err){
+           console.log("err",err)
+           if(err.code==11000){
+               return sendCustomError({}, res, 500, 'teacher address already exists.');
+           }else{
+                return sendCustomError({}, res, 500, 'Error  in adding teacher address.');
+           }
+          
+       }else{
+           
+   
+            return sendSuccess(data, res, 200, "teacher address created successfully.");
+       }
+   
+      })   
+//    teacher certification end
+
+
+   // teacher experience start
+   console.log(newTeacher._id);               
+   let experienceData={
+       teacherId:newTeacher._id
+   }
+   let newExperience = new Experience(experienceData);
+   newExperience.save(async (err, data) => {
+   
+   
+   
+       if(err){
+           console.log("err",err)
+           if(err.code==11000){
+               return sendCustomError({}, res, 500, 'teacher address already exists.');
+           }else{
+                return sendCustomError({}, res, 500, 'Error  in adding teacher address.');
+           }
+          
+       }else{
+           
+   
+            return sendSuccess(data, res, 200, "teacher address created successfully.");
+       }
+   
+      })   
+//    teacher experience end
+
+
+   // teacher feature start
+   console.log(newTeacher._id);               
+   let featureData={
+       teacherId:newTeacher._id
+   }
+   let newFeature = new Feature(featureData);
+   newFeature.save(async (err, data) => {
+   
+   
+   
+       if(err){
+           console.log("err",err)
+           if(err.code==11000){
+               return sendCustomError({}, res, 500, 'teacher address already exists.');
+           }else{
+                return sendCustomError({}, res, 500, 'Error  in adding teacher address.');
+           }
+          
+       }else{
+           
+   
+            return sendSuccess(data, res, 200, "teacher address created successfully.");
+       }
+   
+      })   
+//    teacher feature end
+
+   // teacher galleryimage start
+   console.log(newTeacher._id);               
+   let galleryimageData={
+       teacherId:newTeacher._id
+   }
+   let newGalleryimage = new Galleryimage(galleryimageData);
+   newGalleryimage.save(async (err, data) => {
+   
+   
+   
+       if(err){
+           console.log("err",err)
+           if(err.code==11000){
+               return sendCustomError({}, res, 500, 'teacher address already exists.');
+           }else{
+                return sendCustomError({}, res, 500, 'Error  in adding teacher address.');
+           }
+          
+       }else{
+           
+   
+            return sendSuccess(data, res, 200, "teacher address created successfully.");
+       }
+   
+      })   
+//    teacher galleryimage end
+
+
+
+
+
+                       // newTeacher.save(async (err, data) => {
                 //     console.log("teacherSave",data)
                 // });
 

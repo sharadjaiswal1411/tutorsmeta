@@ -11,20 +11,18 @@ const EducationSchema = new mongoose.Schema({
         ref: "teachers",
         default:null
     },
-    subjectsid:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "subjects",
-        default:null
-    },
-  university: {
-    type:String,
+
+  college: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "college",
     trim: true,
     required: true,
    
   },
   
   degreeType: {
-    type:String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "class",
     trim: true,
     required: true,
    
@@ -43,24 +41,6 @@ const EducationSchema = new mongoose.Schema({
     required: true,
    
   },
-  slug: {
-    type:String,
-    trim: true,
-    required: true,
-   
-  },
-   metaTitle: {
-    type:String,
-    trim: true,
-    
-    
-  },
- metaDescription: {
-    type:String,
-    trim: true,
-    
-    
-  },
   created_at: {
     type: Date,
     required:[true,'joiningDate is require in Date'],
@@ -70,12 +50,7 @@ const EducationSchema = new mongoose.Schema({
 updated_at: {
     type: Date,
     default: null
-},
-  status: {
-        type: String,
-        enum : ['ACTIVE','INACTIVE'],
-        default: 'INACTIVE'
-  }
+}
 }, { timestamps: true, strict: true })
 
 

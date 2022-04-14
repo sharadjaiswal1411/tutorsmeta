@@ -108,7 +108,7 @@ emailVeified: {
     // gpsLng:{type:Number, default:0},
     cityId:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "city",
+        ref:'teacherAddress',
         default:null
     },
     // state:{

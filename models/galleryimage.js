@@ -5,45 +5,31 @@ const db = require('../config/database').getUserDB();
 
 
 
-const CertificationSchema = new mongoose.Schema({
+const GalleryimageSchema = new mongoose.Schema({
     teachersid:{
         type: mongoose.Schema.Types.ObjectId,
         ref: "teachers",
         default:null
     },
-  
-  
-
-  location: {
+    name: {
       type:String,
       trim: true,
-      required: true,
+      default:null
      
     },
-  organization: {
-    type:String,
-    trim: true,
-    required: true,
-   
-  },
-  course:{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "subject",
-    default:null
-},
-  startYear: {
-    type:Number,
-    trim: true,
-    required: true,
-   
-  },
-  
-  endYear: {
-    type:Number,
-    trim: true,
-    required: true,
-   
-  },
+    image: {
+      type:String,
+      trim: true,
+      default:null
+     
+    },
+    description: {
+      type:String,
+      trim: true,
+      default:null
+     
+    },
+
   created_at: {
     type: Date,
     required:[true,'joiningDate is require in Date'],
@@ -58,4 +44,4 @@ updated_at: {
 
 
 
-module.exports= { Certification : db.model('certification', CertificationSchema), ObjectId };
+module.exports= { Galleryimage : db.model('galleryimage', GalleryimageSchema), ObjectId };

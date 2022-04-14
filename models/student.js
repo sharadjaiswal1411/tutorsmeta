@@ -119,7 +119,7 @@ const StudentSchema = new mongoose.Schema({
     // },
     cityId: {
          type: mongoose.Schema.Types.ObjectId,
-         ref:'city',
+         ref:'studentAddress',
          default:null,
         trim: true  
     },
