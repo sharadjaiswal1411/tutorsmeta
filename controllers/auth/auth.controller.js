@@ -124,7 +124,7 @@ const register = async (req, res) => {
    // teacher education start
    console.log(newTeacher._id);               
    let educationData={
-       teacherId:newTeacher._id
+       teachersid:newTeacher._id
    }
    let newEducation = new Education(educationData);
    newEducation.save(async (err, data) => {
@@ -181,7 +181,7 @@ const register = async (req, res) => {
    // teacher certification start
    console.log(newTeacher._id);               
    let certificationData={
-       teacherId:newTeacher._id
+       teachersid:newTeacher._id
    }
    let newCertification = new Certification(certificationData);
    newCertification.save(async (err, data) => {
@@ -209,7 +209,7 @@ const register = async (req, res) => {
    // teacher experience start
    console.log(newTeacher._id);               
    let experienceData={
-       teacherId:newTeacher._id
+       teachersId:newTeacher._id
    }
    let newExperience = new Experience(experienceData);
    newExperience.save(async (err, data) => {
@@ -237,7 +237,7 @@ const register = async (req, res) => {
    // teacher feature start
    console.log(newTeacher._id);               
    let featureData={
-       teacherId:newTeacher._id
+       teachersid:newTeacher._id
    }
    let newFeature = new Feature(featureData);
    newFeature.save(async (err, data) => {
@@ -264,7 +264,7 @@ const register = async (req, res) => {
    // teacher galleryimage start
    console.log(newTeacher._id);               
    let galleryimageData={
-       teacherId:newTeacher._id
+       teachersid:newTeacher._id
    }
    let newGalleryimage = new Galleryimage(galleryimageData);
    newGalleryimage.save(async (err, data) => {

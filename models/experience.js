@@ -25,34 +25,35 @@ const ExperienceSchema = new mongoose.Schema({
     startYear: {
         type:Number,
         trim: true,
-        required: true,
+        required: false,
+    default:null
        
       },
       startMonth: {
         type:Number,
         trim: true,
-        required: true,
-       
+        required: false,
+    default:null
       },
           
   endYear: {
     type:Number,
     trim: true,
-    required: true,
-   
+    required: false,
+    default:null
   },
         
   endMonth: {
     type:Number,
     trim: true,
-    required: true,
-   
+    required: false,
+    default:null
   },
   location:{
 
     type:String,
     trim: true,
-    required: true,
+    required: false,
      default:null
 },
   created_at: {

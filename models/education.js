@@ -16,7 +16,8 @@ const EducationSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "college",
     trim: true,
-    required: true,
+    required: false,
+    default:null
    
   },
   
@@ -24,22 +25,24 @@ const EducationSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "class",
     trim: true,
-    required: true,
+    required: false,
+    default:null
    
   },
   
   startYear: {
     type:Number,
     trim: true,
-    required: true,
+    required: false,
+    default:null
    
   },
   
   endYear: {
     type:Number,
     trim: true,
-    required: true,
-   
+    required: false,
+    default:null
   },
   created_at: {
     type: Date,

@@ -17,13 +17,15 @@ const CertificationSchema = new mongoose.Schema({
   location: {
       type:String,
       trim: true,
-      required: true,
+      required: false,
+    default:null
      
     },
   organization: {
     type:String,
     trim: true,
-    required: true,
+    required: false,
+    default:null
    
   },
   course:{
@@ -34,15 +36,15 @@ const CertificationSchema = new mongoose.Schema({
   startYear: {
     type:Number,
     trim: true,
-    required: true,
-   
+    required: false,
+    default:null
   },
   
   endYear: {
     type:Number,
     trim: true,
-    required: true,
-   
+    required: false,
+    default:null
   },
   created_at: {
     type: Date,
