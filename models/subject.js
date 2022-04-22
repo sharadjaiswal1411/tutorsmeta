@@ -13,6 +13,14 @@ const nameValidator = [
     })
 ];
 
+const slugValidator = [
+    validate({
+      validator: 'isLength',
+      arguments: [0, 255],
+      message: 'Username must not exceed {ARGS[1]} characters.'
+    })
+  ];
+
 const SubjectSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -25,9 +33,19 @@ const SubjectSchema = new mongoose.Schema({
     },
     
     status:{            
-        type:Boolean,  
-        default:false        // 0- inactive, 1- active
+        type: String,
+    enum : ['ACTIVE','INACTIVE'],
+    default: 'INACTIVE'
+// 0- inactive, 1- active
     },
+    slug:{
+        type:String,
+        trim: true,
+        required: false,
+        unique: [true, 'Subject has already registered.'],
+        validate: slugValidator
+    }
+
 
 },{ timestamps: true, strict: true })
 

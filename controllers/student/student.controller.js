@@ -8,8 +8,6 @@ const  slugify = require('slugify');
 const { unlink } = require('fs');
 
 
-
-
 const create = async(req,res) =>{
 let {userId,about,board,school,college,subcategory,cityId,created_at,updated_at,status
 } =  req.body;

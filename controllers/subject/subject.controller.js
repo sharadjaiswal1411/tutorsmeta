@@ -1,11 +1,15 @@
 const { Subject, ObjectId } = require('../../models/subject');
 const { sendCustomError, sendSuccess } = require('../../helper/response');
-
+const  slugify = require('slugify');
+const { toUpper } = require('lodash');
 const create = async (req, res) => {
   let {name,status}= req.body;
-  
+       
+
   name=name.toUpperCase();
-  let requestData={name,status};
+  
+  let slug=slugify(name.toLowerCase().trim());
+  let requestData={name,status,slug};
 
   let newSubject = new Subject(requestData);
   console.log("hiiii")
@@ -116,8 +120,10 @@ const listAll = async (req, res) => {
     let offset=parseInt((current_page-1)*per_page);
     let conditions={};
 
-    if(search_text.length>0){
-
+   
+    
+    if(search_text.length){
+     //   current_page=null;
         conditions={ name: { $regex: '.*' + search_text + '.*' ,'$options' : 'i' }};
 
     }
@@ -148,6 +154,7 @@ const listAll = async (req, res) => {
 
 const search = async (req, res) => {
     
+    let status= (req.query.status)?req.query.status:"";
 
    let search_text= (req.query.q)?req.query.q:"";
    let field_name= (req.query.order_by)?req.query.order_by:"";
@@ -158,7 +165,7 @@ const search = async (req, res) => {
     }else{
             order_by['name']=1;
     }
-   let conditions={status:true}
+   let conditions={status:toUpper(status)}
    if(search_text.length>0){
 
        conditions={ name: { $regex: '.*' + search_text + '.*' ,'$options' : 'i' }};
