@@ -106,6 +106,7 @@ const update = async (req, res) => {
 
 const listAll = async (req, res) => {
      let query={};
+     let status=(req.query.status)?req.query.status:"";
     let current_page= parseInt((req.query.current_page)?req.query.current_page:1);
     let search_text= (req.query.search_text)?req.query.search_text:"";
     let field_name= (req.query.order_by)?req.query.order_by:"";
@@ -119,15 +120,20 @@ const listAll = async (req, res) => {
     let per_page= parseInt((req.query.per_page)?req.query.per_page:20);
     let offset=parseInt((current_page-1)*per_page);
     let conditions={};
-
+console.log(status);
    
     
-    if(search_text.length){
+    if(search_text.length>0){
      //   current_page=null;
         conditions={ name: { $regex: '.*' + search_text + '.*' ,'$options' : 'i' }};
 
-    }
-
+    }   console.log(status);
+    if(status){
+        //   current_page=null;
+           conditions={ status: toUpper(status)};
+        
+   
+       }
 
     let total_records= await Subject.countDocuments(conditions);
 
@@ -166,6 +172,7 @@ const search = async (req, res) => {
             order_by['name']=1;
     }
    let conditions={status:toUpper(status)}
+
    if(search_text.length>0){
 
        conditions={ name: { $regex: '.*' + search_text + '.*' ,'$options' : 'i' }};
