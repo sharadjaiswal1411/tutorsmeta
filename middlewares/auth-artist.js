@@ -18,7 +18,7 @@ const authenticate = (req, res, next) => {
         jwt.verify(token, PRIVATE_KEY, async function (error, decoded) {
             if (error) {
                 sendInvalidTokenError(error, res, 3, "Invalid token.");
-            } else if (decoded.userId == 0 || undefined || '') {
+            } else if (decoded.userid == 0 || undefined || '') {
                 sendInvalidTokenError(error, res, 3, "User doesn't exist.");
             }else {
                 const result = await Artist.findOne({ accessToken: token });
@@ -27,7 +27,7 @@ const authenticate = (req, res, next) => {
                     //   sendInvalidTokenError(error, res, 3, "Your account has been inactived by admin.");
                     //} else{
                         req.data = {
-                            userId: decoded.userId,
+                            userid: decoded.userid,
                             email: decoded.email,
                             token: token,
                             deviceType: deviceType,

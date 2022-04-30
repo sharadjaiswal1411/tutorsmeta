@@ -9,16 +9,16 @@ const { unlink } = require('fs');
 
 
 const create = async(req,res) =>{
-let {userId,about,board,school,college,subcategory,cityId,created_at,updated_at,status
+let {userid,about,board,school,college,subcategory,cityId,created_at,updated_at,status
 } =  req.body;
-let slug=slugify(userId.toLowerCase().trim());
+let slug=slugify(userid.toLowerCase().trim());
        
 
-  let requestData={userId,slug,about,board,school,college,subcategory,cityId,created_at,updated_at,status
+  let requestData={userid,slug,about,board,school,college,subcategory,cityId,created_at,updated_at,status
   };
   let conditions={};
-//   if(requestData.userId){
-//     conditions={userId: { $regex: '.*' + requestData.userId + '.*' }};
+//   if(requestData.userid){
+//     conditions={userid: { $regex: '.*' + requestData.userid + '.*' }};
 // }
 // let countData= await  Student.count(conditions);
 
@@ -95,9 +95,9 @@ const login = async (req, res) => {
 
 
 const update = async(req,res) =>{
-let {userId,about,board,school,college,subcategory,cityId,created_at,updated_at,status
+let {userid,about,board,school,college,subcategory,cityId,created_at,updated_at,status
 }=req.body;
-let slug=slugify(userId.toLowerCase().trim());
+let slug=slugify(userid.toLowerCase().trim());
 let {student_id} = req.params;
 try{
 	const studentDetails = await Student.findOne({_id:student_id});
@@ -117,7 +117,7 @@ try{
         //   }
         // }
         let student = await Student.findOneAndUpdate({_id:ObjectId(studentDetails.id)},
-        {$set: {userId,slug,about,board,school,college,subcategory,cityId,created_at,updated_at,status
+        {$set: {userid,slug,about,board,school,college,subcategory,cityId,created_at,updated_at,status
         }},
         {new: true});
 
@@ -153,7 +153,7 @@ let {student_id}=     req.params;
 }
 const view = async (req, res) => {
  let {student_id}=     req.params;
-     const studentDetails = await Student.findOne({ _id: student_id}).populate('courses',{title:1,_id:1}).populate('college',{userId:1,_id:1});
+     const studentDetails = await Student.findOne({ _id: student_id}).populate('courses',{title:1,_id:1}).populate('college',{userid:1,_id:1});
 
      if(studentDetails)
           return sendSuccess(studentDetails, res, 200, "Students details.");
@@ -205,7 +205,8 @@ const listAll = async (req, res) => {
         total_records:total_records
     }
 
-    Student.find(conditions,{}, { skip: offset, limit: per_page,sort:order_by }, function(err, results) {
+    Student.find(conditions).populate("userid").limit(per_page).skip(offset).sort(order_by).then(results => {
+        
         let data={
             'results':results,
             'meta':meta
@@ -231,11 +232,11 @@ const search = async (req, res) => {
 
     if(search_text.length>0){
 
-        conditions={status:'ACTIVE', userId: { $regex: '.*' + search_text + '.*' ,'$options' : 'i'}};
+        conditions={status:'ACTIVE', userid: { $regex: '.*' + search_text + '.*' ,'$options' : 'i'}};
 
     }
 
-    Student.find(conditions,{_id:1,userId:1,sort:order_by}, function(err, results) {
+    Student.find(conditions,{_id:1,userid:1,sort:order_by}, function(err, results) {
      
         // let data={
         //     'results':results

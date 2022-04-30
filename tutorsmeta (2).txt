@@ -12,7 +12,7 @@ updated_at
 
 teachers
 	id
-	userId
+	userid
 	firstName
 	lastName
 	slug
@@ -161,7 +161,7 @@ student
 
 	firstName
 	lastName
-	userId
+	userid
 	profilePic
 	mobileNo
 	gendor
@@ -187,7 +187,7 @@ Organisation
 
 	name
 	slug
-	userId
+	userid
 	profilePic
 	type [Company/Institute/School]
 	legalStatus

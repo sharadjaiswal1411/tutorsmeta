@@ -5,7 +5,7 @@ const { email_validation_regex } = require('../constant/common');
 
 module.exports = {
 create:{
-	userId:Joi.string(),
+	userid:Joi.string(),
 	slug:Joi.string(),
 	about:Joi.string(),
 	board:Joi.string(),
@@ -42,7 +42,7 @@ login: {
 
 
 update:{
-	userId:Joi.string(),
+	userid:Joi.string(),
 	slug:Joi.string(),
 	about:Joi.string(),
 	board:Joi.string(),

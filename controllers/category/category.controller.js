@@ -152,16 +152,16 @@ let current_page= parseInt((req.query.current_page)?req.query.current_page:1);
 
     if(status.length>0 && search_text.length>0 ){
        
-        conditions={status:status , title: { $regex: '.*' + search_text + '.*','$options' : 'i' }}
+        conditions={status:status , name: { $regex: '.*' + search_text + '.*','$options' : 'i' }}
      }
      if(status.length>0 && search_text.length==0 ){
        
-        conditions={status:status }
+        conditions={status:status.toUpperCase() }
      }
 
      if(status.length==0 && search_text.length>0 ){
        
-        conditions={title: { $regex: '.*' + search_text + '.*','$options' : 'i' } }
+        conditions={name: { $regex: '.*' + search_text + '.*','$options' : 'i' } }
      }
 
     let total_records= await Category.countDocuments(conditions);

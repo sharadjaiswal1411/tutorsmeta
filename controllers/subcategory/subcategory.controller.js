@@ -137,6 +137,8 @@ const subcategoryDetails = await SubCategory.findOne({_id:subcategory_id});
 const listAll =async(req, res) =>{
 let current_page= parseInt((req.query.current_page)?req.query.current_page:1);
     let search_text= (req.query.search_text)?req.query.search_text:"";
+    let category= (req.query.category)?req.query.category:"";
+
     let status= (req.query.status)?req.query.status:"";
     let field_name= (req.query.order_by)?req.query.order_by:"";
     let order= (req.query.order)?req.query.order:"";
@@ -154,14 +156,18 @@ let current_page= parseInt((req.query.current_page)?req.query.current_page:1);
        
         conditions={status:status , title: { $regex: '.*' + search_text + '.*','$options' : 'i' }}
      }
-     if(status.length>0 && search_text.length==0 ){
+     if(status.length>0 && search_text.length==0 && category.length==0 ){
        
-        conditions={title:status }
+        conditions={status:status.toUpperCase()}
      }
+     if(status.length==0 && search_text.length==0 && category.length>0 ){
+        console.log(category)
+         conditions={categoryId: category}
+      }
 
-     if(status.length==0 && search_text.length>0 ){
+     if(status.length==0 && search_text.length>0  && category.length==0 ){
        
-        conditions={title: { $regex: '.*' + search_text + '.*','$options' : 'i' } }
+        conditions={name: { $regex: '.*' + search_text + '.*','$options' : 'i' } }
      }
 
     let total_records= await SubCategory.countDocuments(conditions);
@@ -174,7 +180,7 @@ let current_page= parseInt((req.query.current_page)?req.query.current_page:1);
         total_records:total_records
     }
 
-    SubCategory.find(conditions).populate("branch", { title: 1,_id:1 }).limit(per_page).skip(offset).sort(order_by).then(results => {
+    SubCategory.find(conditions).populate("categoryId", { name: 1,_id:1 }).limit(per_page).skip(offset).sort(order_by).then(results => {
         let data={
             'results':results,
             'meta':meta

@@ -66,7 +66,7 @@ const register = async (req, res) => {
 
                delete responseData['password'];
 
-               let token = await genrateUserToken({ email: responseData.email, userId: responseData.id,roleId:responseData.roleId });
+               let token = await genrateUserToken({ email: responseData.email, userid: responseData.id,roleId:responseData.roleId });
               
                responseData['accessToken']=token;
                 
@@ -300,7 +300,7 @@ const register = async (req, res) => {
                
                else if (userDetails.roleId.name=="STUDENT"){
                 let studentData={
-                    userId:userDetails._id
+                    userid:userDetails._id
                 }
                 let newStudent = new Student(studentData);
                 newStudent.save(async (err, data) => {
@@ -378,7 +378,7 @@ const login = async (req, res) => {
             return sendCustomError({}, res, 200, 'Email/Password not matched!');
         }
         if (userDetails) {
-            let token = await genrateUserToken({ email: userDetails.email, userId: userDetails.id,roleId:userDetails.roleId });
+            let token = await genrateUserToken({ email: userDetails.email, userid: userDetails.id,roleId:userDetails.roleId });
                
             let user = await User.findOneAndUpdate({ _id: ObjectId(userDetails.id) },
                 { $set: { accessToken: token } },

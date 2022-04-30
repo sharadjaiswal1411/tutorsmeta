@@ -18,7 +18,7 @@ const studentAuth = (req, res, next) => {
         jwt.verify(token, PRIVATE_KEY, async function (error, decoded) {
             if (error) {
                 sendInvalidTokenError(error, res, 3, "Invalid token.");
-            } else if (decoded.userId == 0 || undefined || '') {
+            } else if (decoded.userid == 0 || undefined || '') {
                 sendInvalidTokenError(error, res, 3, "User doesn't exist.");
             }else {
                 const result = await Student.findOne({ accessToken: token });

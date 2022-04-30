@@ -60,7 +60,11 @@ if(countData==0){
 
 const view = async(req,res) =>{
     let{class_id} = req.params;
-    let classDetails = await Class.findOne({_id:class_id}).populate('branch',{ title: 1,_id:1 }).populate('parent', { title: 1,_id:1 });
+    let classDetails = await Class.findOne({_id:class_id}).populate({path:"subcategoryId", select:{ name: 1,_id:1 ,categoryId:1},
+    populate: {
+        path: "categoryId", // in blogs, populate comments
+        select:{ name: 1,_id:1 }
+     }});
     if(classDetails)
         return sendSuccess({classDetails}, res, 200, "ClassDetails");
     else
@@ -138,6 +142,10 @@ const listAll =async(req, res) =>{
 let current_page= parseInt((req.query.current_page)?req.query.current_page:1);
     let search_text= (req.query.search_text)?req.query.search_text:"";
     let status= (req.query.status)?req.query.status:"";
+    let subcategory= (req.query.subcategory)?req.query.subcategory:"";
+    let category= (req.query.category)?req.query.category:"";
+    
+    // console.log(status);
     let field_name= (req.query.order_by)?req.query.order_by:"";
     let order= (req.query.order)?req.query.order:"";
     let order_by={};
@@ -152,16 +160,21 @@ let current_page= parseInt((req.query.current_page)?req.query.current_page:1);
 
     if(status.length>0 && search_text.length>0 ){
        
-        conditions={status:status , title: { $regex: '.*' + search_text + '.*','$options' : 'i' }}
+        conditions={status:status.toUpperCase() , name: { $regex: '.*' + search_text + '.*','$options' : 'i' }}
      }
-     if(status.length>0 && search_text.length==0 ){
+     if(status.length>0 && search_text.length==0 && subcategory.length==0 && category.length==0){
        
-        conditions={title:status }
+        conditions={status:status.toUpperCase() }
      }
 
-     if(status.length==0 && search_text.length>0 ){
+     if(status.length==0 && search_text.length>0 && subcategory.length==0 && category.length==0 ){
        
-        conditions={title: { $regex: '.*' + search_text + '.*','$options' : 'i' } }
+        conditions={name: { $regex: '.*' + search_text + '.*','$options' : 'i' } }
+     }
+
+     if(status.length==0 && search_text.length==0 && category.length==0 && subcategory.length>0 ){
+       console.log(subcategory)
+        conditions={subcategoryId: subcategory}
      }
 
     let total_records= await Class.countDocuments(conditions);
@@ -174,7 +187,13 @@ let current_page= parseInt((req.query.current_page)?req.query.current_page:1);
         total_records:total_records
     }
 
-    Class.find(conditions).populate("branch", { title: 1,_id:1 }).limit(per_page).skip(offset).sort(order_by).then(results => {
+    Class.find(conditions)
+    .populate({path:"subcategoryId", select:{ name: 1,_id:1 ,categoryId:1},
+    populate: {
+        path: "categoryId", // in blogs, populate comments
+        select:{ name: 1,_id:1 }
+     }})
+     .limit(per_page).skip(offset).sort(order_by).then(results => {
         let data={
             'results':results,
             'meta':meta

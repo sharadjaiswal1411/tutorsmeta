@@ -18,7 +18,7 @@ const adminAuth=(req,res,next)=>{
         jwt.verify(token, PRIVATE_KEY, async function (error, decoded) {
             if (error) {
                 sendCustomError(error, res, 401, "Invalid token.");
-            } else if (decoded.userId == 0 || undefined || '') {
+            } else if (decoded.userid == 0 || undefined || '') {
                 sendCustomError(error, res, 401, "User doesn't exist.");
             }else {
                 const result = await User.findOne({ accessToken: token }).populate('roleId');
@@ -37,7 +37,7 @@ const adminAuth=(req,res,next)=>{
                   
                        
                         req.data = {
-                            userId: decoded.userId,
+                            userid: decoded.userid,
                             email: decoded.email,
                             token: token,
                             deviceType: deviceType,
@@ -66,14 +66,14 @@ const userAuth = (req, res, next) => {
         jwt.verify(token, PRIVATE_KEY, async function (error, decoded) {
             if (error) {
                 sendCustomError(error, res, 401, "Invalid token.");
-            } else if (decoded.userId == 0 || undefined || '') {
+            } else if (decoded.userid == 0 || undefined || '') {
                 sendCustomError(error, res, 401, "User doesn't exist.");
             }else {
                 const result = await User.findOne({ accessToken: token });
                 if (result) {
                   
                         req.data = {
-                            userId: decoded.userId,
+                            userid: decoded.userid,
                             email: decoded.email,
                             token: token,
                             deviceType: deviceType,

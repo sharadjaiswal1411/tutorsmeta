@@ -24,13 +24,13 @@ const emailValidator = [
     })
 ];
 
-//userId,slug,about,board,school,college,subcategory,cityId,created_at,updated_at,status
+//userid,slug,about,board,school,college,subcategory,cityId,created_at,updated_at,status
 
 const StudentSchema = new mongoose.Schema({
 
-  userId:{
+  userid:{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'users',//teacher,organization,student
+    ref: 'user',//teacher,organization,student
     default:null
  },
  slug: {

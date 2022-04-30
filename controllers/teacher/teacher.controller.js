@@ -178,7 +178,7 @@ let current_page= parseInt((req.query.current_page)?req.query.current_page:1);
         total_records:total_records
     }
 
-    Teacher.find(conditions).populate("branch", { title: 1,_id:1 }).limit(per_page).skip(offset).sort(order_by).then(results => {
+    Teacher.find(conditions).populate("userid").limit(per_page).skip(offset).sort(order_by).then(results => {
         let data={
             'results':results,
             'meta':meta
